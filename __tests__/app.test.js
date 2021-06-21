@@ -15,6 +15,7 @@ describe('demo routes', () => {
       .send({ quantity: 3 });
     expect(res.body).toEqual({ id: '1', quantity: 3 });
   });
+
   it('it gets a new order and sends a SMS text', async () => {
     const order1 = await Order.insert({ 
       quantity: 3
@@ -31,5 +32,17 @@ describe('demo routes', () => {
       .get('/api/v1/orders');
     expect(res.body).toEqual([order1, order2, order3]);
   });
-});
 
+  it('it gets a new order and send a SMS text', async () => {
+  
+    const order1 = await Order.insert({ 
+      quantity: 3
+    });
+    // console.log(order1.id);
+    const res = await request(app)
+    // .get('/api/v1/orders/1') <--- this would also work 
+      .get(`/api/v1/orders/${order1.id}`);
+    expect(res.body).toEqual(order1);
+  });
+
+});
