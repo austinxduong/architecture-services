@@ -45,4 +45,18 @@ describe('demo routes', () => {
     expect(res.body).toEqual(order1);
   });
 
+  it('updates an order in databse via .put', async () => {
+
+    const order1 = await Order.insert({
+      quantity: 2
+    });
+
+    order1.quantity = 3;
+
+    const res = await request(app)
+      .put(`/api/v1/orders/${order1.id}`)
+      .send(order1);
+    expect(res.body).toEqual(order1);
+  });
 });
+
